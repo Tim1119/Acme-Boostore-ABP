@@ -41,6 +41,6 @@ public class  BookStoreDataSeederContributor:IDataSeedContributor, ITransientDep
                 autoSave:true
             );
         }
-        throw new NotImplementedException();
+        
     }
 }

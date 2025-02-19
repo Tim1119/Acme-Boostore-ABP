@@ -15,6 +15,8 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Acme.BookStore.Books;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace Acme.BookStore.EntityFrameworkCore;
 
@@ -29,6 +31,15 @@ public class BookStoreDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
 
+public static class MyModuleInitializer
+{
+    [ModuleInitializer]
+    public static void Initialize()
+    {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
+}
+
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityProDbContext and ISaasDbContext
@@ -41,6 +52,7 @@ public class BookStoreDbContext :
      * More info: Replacing a DbContext of a module ensures that the related module
      * uses this DbContext on runtime. Otherwise, it will use its own DbContext class.
      */
+     
 
     // Identity
     public DbSet<IdentityUser> Users { get; set; }
@@ -79,6 +91,8 @@ public class BookStoreDbContext :
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        
 
         /* Include modules to your migration db context */
 
